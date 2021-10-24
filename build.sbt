@@ -147,11 +147,13 @@ lazy val tests = project
   .dependsOn(dom)
   .enablePlugins(ScalaJSPlugin, BuildInfoPlugin, NoPublishPlugin)
 
-lazy val jsdocs = project.dependsOn(dom)
+lazy val jsdocs =
+  project.dependsOn(dom).settings(scalaVersion := "3.1.0").enablePlugins(ScalaJSPlugin)
 lazy val docs =
   project
     .in(file("mdocs"))
     .settings(
+      scalaVersion := "3.1.0",
       mdocJS := Some(jsdocs),
       mdocVariables := Map(
         "VERSION" -> (if (isSnapshot.value)
